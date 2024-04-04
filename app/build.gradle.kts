@@ -69,10 +69,11 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.49")
 
     //Dagger - Hilt
-    kapt ("com.google.dagger:hilt-android-compiler:2.49")
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation ("com.google.dagger:hilt-android:2.49")
+    kapt("com.google.dagger:hilt-compiler:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    // the viewmodel version of Dagger-Hilt is Deprecated
 
     // Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
