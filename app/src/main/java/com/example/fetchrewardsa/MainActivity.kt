@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fetchrewardsa.navigation.FetchRewardsNavi
 import com.example.fetchrewardsa.ui.theme.FetchRewardsATheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,38 +26,33 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FetchRewardsATheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
-                ) {
-                    Column (
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        Greeting("Android")
-                    }
-                }
+             FetchRewardsApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.onBackground,
-        fontFamily = FontFamily.Monospace,
-        fontWeight = FontWeight.ExtraBold
-    )
+fun FetchRewardsApp(){
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            FetchRewardsNavi()
+        }
+
+    }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     FetchRewardsATheme {
-        Greeting("Android")
+       FetchRewardsApp()
     }
 }

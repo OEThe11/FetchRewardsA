@@ -1,6 +1,7 @@
 package com.example.fetchrewardsa.repository
 
 import androidx.lifecycle.LiveData
+import com.example.fetchrewardsa.data.Resource
 import com.example.fetchrewardsa.database.FetchItemEntity
 import com.example.fetchrewardsa.database.FetchRewardsDao
 import com.example.fetchrewardsa.mapping.FetchItemMapper
@@ -15,19 +16,29 @@ class FetchRewardsRepository @Inject constructor(
     val feeds: LiveData<List<FetchItemEntity>>
         get() = fetchRewardsDao.getAllInfo()
 
-    //The Filtering of null and Empty Strings happens here
-    suspend fun fetchInfo(): List<FetchItemEntity>? {
+    //Using the resource file to handle the network calls
+    //and sending them into the local database
+    suspend fun fetchInfo(): Resource<List<FetchItemEntity>?>{
+    return try {
         val request = api.getAllFetchRewardsInfo()
-        if (request.isSuccessful){
-            val fetchItems = request.body()!!.filter {
-                !it.name.isNullOrEmpty()
-            }.map {
-               FetchItemMapper.buildFrom(it)
-            }
-            fetchRewardsDao.insertAll(*fetchItems.toTypedArray())
-            return fetchItems
+        if (!request.isSuccessful){
+            return  Resource.Error(message = request.message())
         }
-        return null
+
+        val fetchItems = request.body()?.filter {
+            !it.name.isNullOrEmpty()
+        }?.map {
+            FetchItemMapper.buildFrom(it)
+        }
+
+        fetchItems?.let {
+            fetchRewardsDao.insertAll(*it.toTypedArray())
+            Resource.Success(data = it)
+        } ?: Resource.Error(message = "Empty Response")
+    } catch (e: Exception){
+        Resource.Error(message = e.message ?: "Unknown Error")
+    }
+
     }
 
 }
