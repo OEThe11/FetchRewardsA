@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fetchrewardsa.database.FetchItemEntity
-@Preview
+
 @Composable
 //The Container
 fun FetchRewardsCard(fetchItem: FetchItemEntity = FetchItemEntity(4, 56, "ty"), modifier: Modifier) {
