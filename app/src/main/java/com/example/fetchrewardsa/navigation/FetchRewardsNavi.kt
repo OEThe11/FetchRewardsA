@@ -21,12 +21,15 @@ fun FetchRewardsNavi() {
         }
 
         composable("${FetchRewardsScreens.IndividualItemScreen.name}/{itemId}",
-            arguments = listOf(navArgument("bookItemId") {
-                type = NavType.StringType})
+            arguments = listOf(navArgument("itemId") {type = NavType.IntType})
             ){backStackEntry ->
-            IndividualItemScreen(
-                itemId = backStackEntry.arguments?.getString("itemId"),
-                navController = navController)
+            val itemId = backStackEntry.arguments?.getInt("itemId")
+            itemId?.let {
+                IndividualItemScreen(
+                    itemId = it,
+                    navController = navController
+                )
+            }
         }
 
     }

@@ -1,15 +1,13 @@
 package com.example.fetchrewardsa.screens.individual
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fetchrewardsa.data.Resource
 import com.example.fetchrewardsa.database.FetchItemEntity
 import com.example.fetchrewardsa.repository.FetchRewardsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,23 +17,16 @@ class IndividualItemViewModel @Inject constructor(
     private val repository: FetchRewardsRepository
 ): ViewModel() {
 
-    private val _item = MutableLiveData<FetchItemEntity?>()
-    val item: LiveData<FetchItemEntity?> = _item
-    val isLoading = mutableStateOf(false)
+    private val _item = MutableStateFlow<Resource<FetchItemEntity>>(Resource.Loading())
+    val item: StateFlow<Resource<FetchItemEntity>> = _item
 
-    fun fetchItemById(itemId: Int){
+
+
+    fun fetchEntityById(id: Int){
         viewModelScope.launch {
-            isLoading.value = true
-            repository.getItemById(itemId)
-                .catch {e ->
-                    Log.e(TAG, e.message, e.cause )
-                    isLoading.value = false
-                }
-                .collect{itemEntity->
-                    _item.value = itemEntity
-                    isLoading.value = false
-                }
-
+            repository.getById(id).collect { resource ->
+                _item.value = resource
+            }
         }
     }
 }

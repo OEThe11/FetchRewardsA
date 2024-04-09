@@ -6,15 +6,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface FetchRewardsDao {
 
     @Query("SELECT * FROM fetch_entity ORDER BY listId ASC")
-    fun getAllInfo(): LiveData<List<FetchItemEntity>>
+    fun getAllInfo(): Flow<List<FetchItemEntity>>
 
     @Query("SELECT * FROM fetch_entity WHERE id = :itemId")
-    fun getInfoById(itemId: Int): Flow<FetchItemEntity?>
+    fun getInfoById(itemId: Int): Flow<FetchItemEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg info: FetchItemEntity)

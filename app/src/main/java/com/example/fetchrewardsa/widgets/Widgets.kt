@@ -26,7 +26,7 @@ import com.example.fetchrewardsa.database.FetchItemEntity
 //The Container
 fun FetchRewardsCard(fetchItem: FetchItemEntity = FetchItemEntity(4, 56, "ty"), modifier: Modifier) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(110.dp)
             .padding(16.dp),
