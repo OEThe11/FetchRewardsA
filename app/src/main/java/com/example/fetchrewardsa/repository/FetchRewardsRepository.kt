@@ -1,11 +1,14 @@
 package com.example.fetchrewardsa.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.fetchrewardsa.data.Resource
 import com.example.fetchrewardsa.database.FetchItemEntity
 import com.example.fetchrewardsa.database.FetchRewardsDao
 import com.example.fetchrewardsa.mapping.FetchItemMapper
 import com.example.fetchrewardsa.network.FetchRewardsApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class FetchRewardsRepository @Inject constructor(
@@ -39,6 +42,13 @@ class FetchRewardsRepository @Inject constructor(
         Resource.Error(message = e.message ?: "Unknown Error")
     }
 
+    }
+
+    //For the details of an individual item
+    fun getItemById(itemId: Int?): Flow<FetchItemEntity?> {
+        return itemId?.let {
+            fetchRewardsDao.getInfoById(it)
+        } ?: flowOf(null)
     }
 
 }
