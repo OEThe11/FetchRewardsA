@@ -8,14 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.fetchrewardsa.navigation.FetchRewardsNavi
 import com.example.fetchrewardsa.ui.theme.FetchRewardsATheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,16 +21,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             FetchRewardsATheme {
-             FetchRewardsApp()
+                FetchRewardsApp()
             }
         }
     }
 }
 
 @Composable
-fun FetchRewardsApp(){
+fun FetchRewardsApp() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -53,6 +51,6 @@ fun FetchRewardsApp(){
 @Composable
 fun GreetingPreview() {
     FetchRewardsATheme {
-       FetchRewardsApp()
+        FetchRewardsApp()
     }
 }

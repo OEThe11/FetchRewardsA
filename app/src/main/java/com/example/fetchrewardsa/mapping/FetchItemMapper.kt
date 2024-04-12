@@ -5,7 +5,7 @@ import com.example.fetchrewardsa.models.FetchGetResponseItem
 
 object FetchItemMapper {
 
-    fun buildFrom(response: FetchGetResponseItem): FetchItemEntity{
+    fun buildFrom(response: FetchGetResponseItem): FetchItemEntity {
         return FetchItemEntity(
             id = response.id,
             listId = response.listId,
