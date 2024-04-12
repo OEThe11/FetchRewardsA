@@ -1,8 +1,5 @@
 package com.example.fetchrewardsa.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.fetchrewardsa.data.Resource
 import com.example.fetchrewardsa.database.FetchItemEntity
 import com.example.fetchrewardsa.database.FetchRewardsDao
@@ -16,7 +13,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -41,12 +37,12 @@ class FetchRewardsRepository @Inject constructor(
     suspend fun fetchInfo(): Resource<List<FetchItemEntity>> {
         return try {
             val response = api.getAllFetchRewardsInfo()
-            Log.d(TAG, "fetchInfo: API response: $response")
 
             if (response.isSuccessful) {
                 // Filter out items with null or empty names and convert them
                 val fetchItems = response.body()?.filterNot {
-                    it.name.isNullOrEmpty() }?.map { FetchItemMapper.buildFrom(it) }
+                    it.name.isNullOrEmpty()
+                }?.map { FetchItemMapper.buildFrom(it) }
 
                 if (fetchItems.isNullOrEmpty()) {
                     Resource.Error("Empty Response")
@@ -64,19 +60,16 @@ class FetchRewardsRepository @Inject constructor(
     }
 
 
-
-
     fun getById(id: Int): Flow<Resource<FetchItemEntity>> = flow {
         try {
             emit(Resource.Loading())
             val data = fetchRewardsDao.getInfoById(id).firstOrNull()
-            if (data != null){
+            if (data != null) {
                 emit(Resource.Success(data))
-            }
-            else{
+            } else {
                 emit(Resource.Error("Data not found"))
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             emit(Resource.Error("An error occurred: ${e.message}"))
         }
     }

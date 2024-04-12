@@ -12,17 +12,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "IndividualItemViewModel"
+
 @HiltViewModel
 class IndividualItemViewModel @Inject constructor(
     private val repository: FetchRewardsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _item = MutableStateFlow<Resource<FetchItemEntity>>(Resource.Loading())
     val item: StateFlow<Resource<FetchItemEntity>> = _item
 
 
-
-    fun fetchEntityById(id: Int){
+    fun fetchEntityById(id: Int) {
         viewModelScope.launch {
             repository.getById(id).collect { resource ->
                 _item.value = resource

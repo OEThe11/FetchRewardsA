@@ -15,14 +15,15 @@ fun FetchRewardsNavi() {
     NavHost(
         navController = navController,
         startDestination = FetchRewardsScreens.MainScreen.name
-    ){
-        composable(FetchRewardsScreens.MainScreen.name){
-          MainScreen(navController = navController)
+    ) {
+        composable(FetchRewardsScreens.MainScreen.name) {
+            MainScreen(navController = navController)
         }
 
-        composable("${FetchRewardsScreens.IndividualItemScreen.name}/{itemId}",
-            arguments = listOf(navArgument("itemId") {type = NavType.IntType})
-            ){backStackEntry ->
+        composable(
+            "${FetchRewardsScreens.IndividualItemScreen.name}/{itemId}",
+            arguments = listOf(navArgument("itemId") { type = NavType.IntType })
+        ) { backStackEntry ->
             val itemId = backStackEntry.arguments?.getInt("itemId")
             itemId?.let {
                 IndividualItemScreen(
