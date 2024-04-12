@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.fetchrewardsa"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -32,17 +32,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
     packaging {
         resources {
@@ -69,10 +69,11 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.49")
 
     //Dagger - Hilt
-    kapt ("com.google.dagger:hilt-android-compiler:2.39")
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation ("com.google.dagger:hilt-android:2.49")
+    kapt("com.google.dagger:hilt-compiler:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    // the viewmodel version of Dagger-Hilt is Deprecated
 
     // Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
@@ -107,6 +108,10 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt) MUST HAVE!
     kapt("androidx.room:room-compiler:2.6.1")
     implementation ("androidx.room:room-ktx:2.6.1")
+
+    //For the Splash Screen Library
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
 
 
 
